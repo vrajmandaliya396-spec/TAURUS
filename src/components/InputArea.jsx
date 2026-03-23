@@ -1,5 +1,5 @@
 import React, { useRef, useEffect } from 'react';
-import { Paperclip, Mic, Send } from 'lucide-react';
+import { Send, Terminal } from 'lucide-react';
 
 const InputArea = ({ input, setInput, onSubmit, isTyping }) => {
   const textareaRef = useRef(null);
@@ -7,7 +7,7 @@ const InputArea = ({ input, setInput, onSubmit, isTyping }) => {
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 120)}px`;
     }
   }, [input]);
 
@@ -23,14 +23,16 @@ const InputArea = ({ input, setInput, onSubmit, isTyping }) => {
   return (
     <div className="input-container-wrapper">
       <div className="input-container">
-        <div className="input-actions">
-          <button className="icon-btn"><Paperclip size={20} /></button>
+        <div className="input-actions" style={{ marginRight: '0.5rem' }}>
+          <button className="icon-btn">
+            <Terminal size={20} />
+          </button>
         </div>
         
         <textarea
           ref={textareaRef}
           className="chat-input"
-          placeholder="Message Taurus..."
+          placeholder="Accessing neural net..."
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
@@ -38,17 +40,13 @@ const InputArea = ({ input, setInput, onSubmit, isTyping }) => {
         />
         
         <div className="input-actions" style={{ marginLeft: 'auto' }}>
-          {input.trim() ? (
-            <button 
-              className="send-btn" 
-              onClick={onSubmit}
-              disabled={isTyping}
-            >
-              <Send size={18} />
-            </button>
-          ) : (
-            <button className="icon-btn"><Mic size={20} /></button>
-          )}
+          <button 
+            className="send-btn" 
+            onClick={onSubmit}
+            disabled={isTyping || !input.trim()}
+          >
+            <Send size={18} />
+          </button>
         </div>
       </div>
     </div>

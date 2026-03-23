@@ -1,12 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
-import Sidebar from './components/Sidebar';
 import MessageBubble from './components/MessageBubble';
 import InputArea from './components/InputArea';
-import { Menu, Zap } from 'lucide-react';
 import './index.css';
 
 const App = () => {
-  const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [isTyping, setIsTyping] = useState(false);
@@ -23,51 +20,49 @@ const App = () => {
   const handleSend = () => {
     if (!input.trim()) return;
     
-    // Add user message
     const userMessage = { role: 'user', text: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
     setIsTyping(true);
 
-    // Mock AI response delay
     setTimeout(() => {
       setMessages((prev) => [
         ...prev, 
         { 
           role: 'ai', 
-          text: "I am Taurus AI. I'm currently a prototype, but I'm ready to assist you with your queries using this gorgeous new interface." 
+          text: "I am Taurus AI. I've been awakened in this advanced neural environment. How may I integrate with your workflow today?" 
         }
       ]);
       setIsTyping(false);
-    }, 1500);
-  };
-
-  const handleNewChat = () => {
-    setMessages([]);
-    setInput('');
-    setSidebarOpen(false);
+    }, 2000);
   };
 
   return (
     <div className="app-container">
-      <Sidebar isOpen={isSidebarOpen} onNewChat={handleNewChat} />
-      
+      {/* Background Starfield */}
+      <div className="starfield"></div>
+
+      {/* Main App Content */}
       <main className="main-chat">
         <header className="chat-header">
-          <button 
-            className="mobile-menu-btn" 
-            onClick={() => setSidebarOpen(!isSidebarOpen)}
-          >
-            <Menu size={24} color="#fff" />
-          </button>
-          <span>Taurus</span> AI
+          TAURUS <span>// AI SYS</span>
         </header>
+
+        {/* Central AI Core Ring System - transitions to top/background when messages exist */}
+        <div className={`core-container ${messages.length > 0 ? 'shifting-up' : ''}`}>
+          <div className={`ai-core ${isTyping ? 'typing' : ''}`}>
+            <div className="ring ring-1"></div>
+            <div className="ring ring-2"></div>
+            <div className="ring ring-3"></div>
+            <div className="core-center"></div>
+          </div>
+        </div>
 
         <div className="messages-container">
           {messages.length === 0 ? (
             <div className="initial-view">
-              <h1>Taurus</h1>
-              <p>How can I help you today? Type a prompt below to get started.</p>
+              <h1>TAURUS</h1>
+              <p>System initialized. Awaiting commands...</p>
             </div>
           ) : (
             <>
@@ -77,18 +72,20 @@ const App = () => {
               {isTyping && (
                 <div className="message-wrapper ai">
                   <div className="avatar ai">
-                    <Zap size={20} />
+                    <span style={{ fontFamily: 'Orbitron', fontWeight: 700, fontSize: '10px' }}>AI</span>
                   </div>
-                  <div className="message-content">
-                    <div className="typing-indicator">
-                      <div className="typing-dot"></div>
-                      <div className="typing-dot"></div>
-                      <div className="typing-dot"></div>
+                  <div className="message-content" style={{ padding: '0.75rem 1.5rem', background: 'transparent', border: 'none', boxShadow: 'none' }}>
+                    <div className="waveform">
+                      <div className="wave-bar"></div>
+                      <div className="wave-bar"></div>
+                      <div className="wave-bar"></div>
+                      <div className="wave-bar"></div>
+                      <div className="wave-bar"></div>
                     </div>
                   </div>
                 </div>
               )}
-              <div ref={messagesEndRef} />
+              <div ref={messagesEndRef} style={{ height: 40 }} />
             </>
           )}
         </div>
@@ -100,16 +97,6 @@ const App = () => {
           isTyping={isTyping}
         />
       </main>
-
-      {/* Overlay for mobile sidebar */}
-      {isSidebarOpen && (
-        <div 
-          style={{
-            position: 'fixed', inset: 0, backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 5
-          }}
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
     </div>
   );
 };
