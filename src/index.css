@@ -239,7 +239,6 @@ body {
 /* Messages Area */
 .messages-container {
   flex: 1;
-  overflow-y: auto;
   padding: 8rem 2rem 10rem;
   display: flex;
   flex-direction: column;
