@@ -58,9 +58,9 @@ const App = () => {
             className="mobile-menu-btn" 
             onClick={() => setSidebarOpen(!isSidebarOpen)}
           >
-            <Menu size={24} />
+            <Menu size={24} color="#fff" />
           </button>
-          <span>Taurus AI ✨</span>
+          <span>Taurus</span> AI
         </header>
 
         <div className="messages-container">
