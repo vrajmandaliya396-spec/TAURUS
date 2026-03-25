@@ -19,7 +19,7 @@ const App = () => {
 
   const handleSend = () => {
     if (!input.trim()) return;
-    
+
     const userMessage = { role: 'user', text: input };
     setMessages((prev) => [...prev, userMessage]);
     setInput('');
@@ -27,10 +27,10 @@ const App = () => {
 
     setTimeout(() => {
       setMessages((prev) => [
-        ...prev, 
-        { 
-          role: 'ai', 
-          text: "I am Taurus AI. I've been awakened in this advanced neural environment. How may I integrate with your workflow today?" 
+        ...prev,
+        {
+          role: 'ai',
+          text: "I am Taurus AI. I've been awakened in this advanced neural environment. How may I integrate with your workflow today?"
         }
       ]);
       setIsTyping(false);
@@ -90,10 +90,10 @@ const App = () => {
           )}
         </div>
 
-        <InputArea 
-          input={input} 
-          setInput={setInput} 
-          onSubmit={handleSend} 
+        <InputArea
+          input={input}
+          setInput={setInput}
+          onSubmit={handleSend}
           isTyping={isTyping}
         />
       </main>
