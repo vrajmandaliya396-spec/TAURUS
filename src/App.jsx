@@ -17,25 +17,41 @@ const App = () => {
     scrollToBottom();
   }, [messages, isTyping]);
 
-  const handleSend = () => {
-    if (!input.trim()) return;
-
+  const handleSend = async () => {
     const userMessage = { role: 'user', text: input };
-    setMessages((prev) => [...prev, userMessage]);
-    setInput('');
-    setIsTyping(true);
 
-    setTimeout(() => {
+    try {
+      const response = await fetch("https://api.openai.com/v1/chat/completions", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer YOUR_API_KEY"
+        },
+        body: JSON.stringify({
+          model: "gpt-4o-mini",
+          messages: [
+            { role: "system", content: "You are Taurus AI, a futuristic assistant." },
+            { role: "user", content: input }
+          ]
+        })
+      });
+
+      const data = await response.json();
+
+      const aiReply = data.choices[0].message.content;
+
       setMessages((prev) => [
         ...prev,
-        {
-          role: 'ai',
-          text: "I am Taurus AI. I've been awakened in this advanced neural environment. How may I integrate with your workflow today?"
-        }
+        { role: "ai", text: aiReply }
       ]);
-      setIsTyping(false);
-    }, 2000);
-  };
+
+    } catch (error) {
+      console.error("Error:", error);
+    }
+
+  }
+
+
 
   return (
     <div className="app-container">
